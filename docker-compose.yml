@@ -2,7 +2,7 @@ version: "3.5"
 services:
   node-api:
     container_name: node-api
-    image: node-api
+    build: ./node-api
     ports:
       - 3000:3000
     environment:
