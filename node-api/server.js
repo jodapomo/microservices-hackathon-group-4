@@ -1,3 +1,8 @@
+var apm = require('elastic-apm-node').start({
+  serviceName: 'node-api',
+  serverUrl: 'http://apm-server:8200'
+})
+
 require('dotenv').config();
 const express = require('express');
 const env = require('./env');
