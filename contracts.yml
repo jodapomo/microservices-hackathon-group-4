@@ -1,0 +1,54 @@
+node-api: gateway api
+python-api: auth api
+java-api: business api
+
+node-api -> python-api:
+  authentication:
+    request:
+      path: http://python-api.com/auth/{token}
+      method: GET
+      description: token is a string with user data in the form username:password in base64
+    response:
+      success:
+        code: 200
+        body: none
+      failed:
+        code: 401
+        body:
+          text: Login failed
+
+node-api -> java-api:
+  get-products:
+    request:
+      path: http://java-api.com/products
+      method: GET
+    response:
+      success:
+        code: 200
+        body:
+          json:
+            [
+              { name: "product1", price: 200, description: "", image: "" },
+              { name: "product2", price: 300, description: "", image: "" },
+              ...,
+            ]
+      failed:
+        code: 404
+        body:
+          text: No products found
+
+  make-payment:
+    request:
+      path: http://java-api.com/payments
+      method: POST
+      body:
+        json: { product: "product1", quantity: 10, card: "5465887168" }
+    response:
+      success:
+        code: 201
+        body:
+          text: Payment successfully completed
+      failed:
+        code: 400
+        body:
+          text: Payment failed. Insufficient funds

@@ -11,13 +11,11 @@ const axios = require('axios');
 const app = express();
 
 const getToken = (req) => {
-  const bearerHeader = req.headers['authorization'];
+  const authHeader = req.headers['authorization'];
 
-  if (bearerHeader) {
-    const bearer = bearerHeader.split(' ');
-    return bearer[1];
+  if (authHeader) {
+    return authHeader.replace('Basic ', '');
   }
-
   return ''
 }
 
@@ -27,7 +25,8 @@ const authenticate = async (token) => {
   } catch (error) {
     throw {
       error,
-      message: 'Authentication failed'
+      message: 'Authentication failed',
+      code: 401,
     }
   }
 }
@@ -47,8 +46,7 @@ app.get('/products', async (req, res) => {
     const products = await axios.get(`${env.UNNAMED_API_URL}/products`);
     res.status(200).json(products);
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+    res.status(error.code).json(error);
   }
 });
 
@@ -59,8 +57,7 @@ app.post('/payments', async (req, res) => {
     const payment = await axios.post(`${env.UNNAMED_API_URL}/payments`);
     res.status(200).json(payment);
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+    res.status(error.code).json(error);
   }
 });
 
