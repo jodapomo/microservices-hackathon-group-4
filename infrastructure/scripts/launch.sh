@@ -17,7 +17,7 @@ function install_docker(){
     apt-get update
     echo INSTALLING DOCKER-CE:
     apt-get install docker-ce docker-ce-cli -y  && echo "Successful docker ce" || echo "Fail"
-    usermod -aG docker $user && echo "Successful docker all" || echo "Fail"
+    usermod -aG docker $(whoami) && echo "Successful docker all" || echo "Fail"
 }
 
 function install_docker_compose(){
