@@ -1,0 +1,8 @@
+runPipeline(
+  type:                 'performanceJmeter',
+  project:              'Summit',
+  application:          'node-api',
+  node:                 'standard-slave',
+  environment:          'prod',
+  basePath:             'performance',
+)
