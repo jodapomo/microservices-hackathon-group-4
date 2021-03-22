@@ -4,7 +4,7 @@ services:
     container_name: node-api
     build: ./node-api
     ports:
-      - 3000:3000
+      - 80:3000
     environment:
       - API_PORT=3000
       - AUTH_API_URL=auth.api.com
@@ -42,6 +42,8 @@ services:
   apm-server:
     container_name: apm-server
     image: docker.elastic.co/apm/apm-server:7.10.2
+    command:
+      - "--strict.perms=false"
     ports:
       - 8200:8200
     environment:
@@ -54,4 +56,4 @@ volumes:
     name: mongo
   elastic-data:
     name: elastic
-    driver: local    
+    driver: local
