@@ -1,8 +1,34 @@
-runPipeline(
-  type:                 'performanceJmeter',
-  project:              'Summit',
-  application:          'node-api',
-  node:                 'standard-slave',
-  environment:          'prod',
-  basePath:             'performance',
-)
+pipeline {
+  agent none
+
+  stages {
+    stage('Prepare load injector') {
+      agent { label 'standard-slave' }
+      steps {
+        script {
+          def testPlans = [
+            "performance/tests-plans/applications/node-api/transactions/benchmark/benchmark.jmx"
+          ]
+          testPlans.each { testPlan ->
+            sh "/home/ubuntu/jmeter/apache-jmeter-5.2.1/bin/PluginsManagerCMD.sh install-for-jmx $testPlan"
+          }
+        }
+      }
+    }
+
+    stage('Run pipeline') {
+      steps {
+        script {
+          runPipeline(
+            type:                 'performanceJmeter',
+            project:              'Summit',
+            application:          'node-api',
+            node:                 'standard-slave',
+            environment:          'prod',
+            basePath:             'performance',
+          )
+        }
+      }
+    }
+  }
+}
