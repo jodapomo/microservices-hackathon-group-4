@@ -139,7 +139,7 @@ ELASTIC_APM = {
   # Set required service name. 
   # Allowed characters:
   # a-z, A-Z, 0-9, -, _, and space
-  'SERVICE_NAME': 'apm-server',
+  'SERVICE_NAME': 'python-api',
 
   # Use if APM Server requires a token
   #'SECRET_TOKEN': '<apm_token>',
