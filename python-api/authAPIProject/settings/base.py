@@ -44,16 +44,17 @@ LOCAL_APPS = [
 ]
 
 THIRD_APPS = [
+    'elasticapm.contrib.django',
     'rest_framework',
     'rest_framework.authtoken',
     #'oauth2_provider',
     'simple_history',
-    'elasticapm.contrib.django'
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE = [
+    'elasticapm.contrib.django.middleware.TracingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +63,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
-    'elasticapm.contrib.django.middleware.TracingMiddleware',
 ]
 
 ROOT_URLCONF = 'authAPIProject.urls'
@@ -136,6 +136,7 @@ REST_FRAMEWORK = {
 
 
 ELASTIC_APM = {
+  'DEBUG': True,
   # Set required service name. 
   # Allowed characters:
   # a-z, A-Z, 0-9, -, _, and space
