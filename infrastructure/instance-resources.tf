@@ -8,6 +8,10 @@ resource "aws_instance" "perf-summit-grp4-instance" {
 
   user_data_base64 = base64encode(data.template_file.userdata.rendered)
 
+  root_block_device {
+    volume_size = 50
+  }
+
   tags = {
     Name        = "perf-summit-grp4-instance"
     project     = var.project_tag
