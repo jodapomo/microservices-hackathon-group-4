@@ -46,6 +46,22 @@ resource "aws_security_group" "perf-summit-grp4-instance-sg" {
   }
 
   ingress {
+    description = "Auth port"
+    from_port   = var.auth_port
+    to_port     = var.auth_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Employees port"
+    from_port   = var.employees_port
+    to_port     = var.employees_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "SSH port"
     from_port   = 22
     to_port     = 22

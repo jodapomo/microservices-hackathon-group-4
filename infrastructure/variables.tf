@@ -34,6 +34,14 @@ variable "api_port" {
   type = string
 }
 
+variable "auth_port" {
+  type = string
+}
+
+variable "employees_port" {
+  type = string
+}
+
 variable "kibana_port" {
   type = string
 }
