@@ -7,8 +7,8 @@ services:
       - 80:3000
     environment:
       - API_PORT=3000
-      - AUTH_API_URL=auth.api.com
-      - UNNAMED_API_URL=other.api.com
+      - AUTH_API_URL=http://python:8000
+      - EMPLOYEES_API_URL=http://java-api:8085
   mongo:
     container_name: mongo
     image: mongo:4.2.8
@@ -28,36 +28,36 @@ services:
     depends_on:
       - mongo
 # APM
-  elasticsearch:
-    container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
-    ports:
-      - 9200:9200
-      - 9300:9300
-    environment:
-      - discovery.type=single-node
-    volumes:
-      - elastic-data:/usr/share/elasticsearch/data      
-  kibana:
-    container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.10.2
-    ports:
-      - 5601:5601
-    environment:
-      - output.elasticsearch.hosts=["elasticsearch:9200"]
-    environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-  apm-server:
-    container_name: apm-server
-    image: docker.elastic.co/apm/apm-server:7.10.2
-    command:
-      - "--strict.perms=false"
-    ports:
-      - 8200:8200
-    environment:
-      - output.elasticsearch.hosts=["elasticsearch:9200"]
-    volumes:
-      - ./apm-server/config/apm-server.docker.yml:/usr/share/apm-server/apm-server.yml:ro
+elasticsearch:
+  container_name: elasticsearch
+  image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+  ports:
+    - 9200:9200
+    - 9300:9300
+  environment:
+    - discovery.type=single-node
+  volumes:
+    - elastic-data:/usr/share/elasticsearch/data
+kibana:
+  container_name: kibana
+  image: docker.elastic.co/kibana/kibana:7.10.2
+  ports:
+    - 5601:5601
+  environment:
+    - output.elasticsearch.hosts=["elasticsearch:9200"]
+  environment:
+    ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+apm-server:
+  container_name: apm-server
+  image: docker.elastic.co/apm/apm-server:7.10.2
+  command:
+    - "--strict.perms=false"
+  ports:
+    - 8200:8200
+  environment:
+    - output.elasticsearch.hosts=["elasticsearch:9200"]
+  volumes:
+    - ./apm-server/config/apm-server.docker.yml:/usr/share/apm-server/apm-server.yml:ro
 
 volumes:
   mongo-data:
