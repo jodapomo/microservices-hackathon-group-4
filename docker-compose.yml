@@ -27,6 +27,15 @@ services:
       - 8000:8000
     depends_on:
       - mongo
+  java:
+    container_name: java-api
+    build: ./java-api/DataMongoDBAdmin
+    ports:
+      - 8085:8085
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_DATA_MONGODB_.HOST=mongo      
   # APM
   elasticsearch:
     container_name: elasticsearch
