@@ -42,6 +42,10 @@ variable "employees_port" {
   type = string
 }
 
+variable "db_port" {
+  type = string
+}
+
 variable "kibana_port" {
   type = string
 }
