@@ -29,7 +29,7 @@ services:
       - mongo
   java:
     container_name: java-api
-    build: ./java-api/DataMongoDBAdmin
+    build: ./java-api
     ports:
       - 8085:8085
     depends_on:
