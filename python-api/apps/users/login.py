@@ -23,6 +23,9 @@ class Login(ObtainAuthToken):
             user = login_serializer.validated_data['user']
             if user.is_active:
                 token,created = Token.objects.get_or_create(user=user)
+                if not created:
+                    token.delete()
+                    token = Token.objects.create(user=user)
                 user_serializer = UserDetailSerializer(user)
                 return Response({
                         'token': token.key,
