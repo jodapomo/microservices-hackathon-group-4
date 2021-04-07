@@ -7,10 +7,11 @@ require("dotenv").config();
 const express = require("express");
 const env = require("./env");
 const axios = require("axios");
-const FormData = require("form-data");
+const cors = require('cors')
 
 const app = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
