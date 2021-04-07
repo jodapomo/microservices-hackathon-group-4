@@ -15,13 +15,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const authenticate = async (username, password) => {
-  const form = new FormData();
-  form.append("username", username);
-  form.append("password", password);
-  const response = await axios.post(`${env.AUTH_API_URL}/auth/`, form, {
-    headers: form.getHeaders(),
+  const params = new URLSearchParams();
+  params.append("username", username);
+  params.append("password", password);
+  const response = await axios.post(`${env.AUTH_API_URL}/auth/`, params, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
   });
-  console.log(response.data);
   return response.data;
 };
 
@@ -29,6 +30,16 @@ const getUser = async (req) => {
   const token = req.header("authorization");
   const response = await axios.get(`${env.AUTH_API_URL}/users/1`, {
     headers: { Authorization: token || "" },
+  });
+  return response.data;
+};
+
+const createUser = async (email, password, name, lastname) => {
+  const response = await axios.post(`${env.AUTH_API_URL}/register/`, {
+    email,
+    name,
+    lastname,
+    password,
   });
   return response.data;
 };
@@ -43,6 +54,17 @@ app.get("/", function (req, res) {
 app.post("/login", async (req, res) => {
   try {
     const response = await authenticate(req.body.username, req.body.password);
+    res.status(200).json(response);
+  } catch (error) {
+    const response = error.response;
+    if (response) return res.status(response.status).json(response.data);
+    return res.status(500).json(error);
+  }
+});
+
+app.post("/users", async (req, res) => {
+  try {
+    const response = await createUser(req.body.email, req.body.password, req.body.name, req.body.lastname);
     res.status(200).json(response);
   } catch (error) {
     const response = error.response;
