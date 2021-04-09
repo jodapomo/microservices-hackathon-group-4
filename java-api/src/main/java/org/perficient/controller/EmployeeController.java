@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/employee")
@@ -26,15 +27,16 @@ public class EmployeeController {
 
     @GetMapping("allemployees")
     public ResponseEntity<List<Employee>> getAllEmployees() {
+        Random random = new Random();
+        int limite = random.nextInt(2500 - 500) + 500;
+
         List<Employee> allEmployees = new ArrayList<>();
-        int limite = ((int)Math.random()+2000);
 
         for(int i=0; i<limite; i++){
             List<Employee> temp = employeeService.getAll();
             allEmployees.addAll(temp);
         }
 
-        //List<Employee> allEmployees = employeeService.getAll();
         return ResponseEntity.ok(allEmployees);
     }
 
