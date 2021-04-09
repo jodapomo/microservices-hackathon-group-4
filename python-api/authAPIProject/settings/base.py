@@ -25,7 +25,7 @@ SECRET_KEY = 'ry2petz$zw5=7tcjr%yq6a-h1&u6f5n0r^tj+wh8zd3o5e#&7o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
