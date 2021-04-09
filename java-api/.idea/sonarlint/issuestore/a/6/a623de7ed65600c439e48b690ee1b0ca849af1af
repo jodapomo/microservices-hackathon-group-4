@@ -1,0 +1,10 @@
+
+R	java:S105"EReplace all tab characters in this file by sequences of white-spaces.
+^
+java:S1106"AMove this left curly brace to the beginning of next line of code.(×²¼é8ğ½ÆËŠ/
+^
+java:S1106	"AMove this left curly brace to the beginning of next line of code.(Çµí‘8ğ½ÆËŠ/
+c
+java:S4604"GExclude from the auto-configuration mechanism the beans you don't need.(ûª¢F8ğ½ÆËŠ/
+
+java:S4603"Consider replacing "@SpringBootApplication" by a list of beans imported with @Import to speed-up the start-up of the application.(ûª¢F8ğ½ÆËŠ/
