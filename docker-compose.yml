@@ -35,7 +35,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - SPRING_DATA_MONGODB_.HOST=mongo      
+      - SPRING_DATA_MONGODB_.HOST=mongo
   # APM
   elasticsearch:
     container_name: elasticsearch
