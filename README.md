@@ -123,6 +123,30 @@ Verify all the services are up and running:
 
 ## Instrumentation
 ### Node.js
+To configure the APM in a Node.js application follow these steps:
+
+1. Install the APM agent for Node.js as a dependency to your application:
+
+    ``` bash
+    npm install elastic-apm-node --save
+    ```
+
+2. Add the following code snippet to the application entry point file (usually app.js or sever.js):
+
+    ```javascript
+    // Add this to the VERY top of the file
+    var apm = require("elastic-apm-node").start({
+      // Override service name from package.json
+      // Allowed characters: a-z, A-Z, 0-9, -, _, 
+      // and space
+      serviceName: "node-api",
+
+      // Set custom APM Server URL
+      // Default: http://localhost:8200
+      serverUrl: "http://apm-server:8200",
+    });
+    ```
+For more configuration options refer to the [documentation](https://www.elastic.co/guide/en/apm/agent/nodejs/current/index.html).
 
 ### Java
 
