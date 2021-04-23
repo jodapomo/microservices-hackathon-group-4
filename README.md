@@ -149,7 +149,18 @@ To configure the APM in a Node.js application follow these steps:
 For more configuration options refer to the [documentation](https://www.elastic.co/guide/en/apm/agent/nodejs/current/index.html).
 
 ### Java
+To configure the APM in a Java application you can adjust it in the following docker file:
 
+    ```docker
+    FROM openjdk:11
+    EXPOSE 8085
+    RUN mkdir -p /app/
+    ADD build/libs/java-api-1.0-SNAPSHOT.jar /app/java-api-1.0-SNAPSHOT.jar
+    # Download apm agent 
+    RUN wget -O apm-agent.jar https://search.maven.org/remotecontent?filepath=co/elastic/apm/elastic-apm-agent/1.2.0/elastic-apm-agent-1.2.0.jar
+    # Set apm configuration
+    CMD ["java","-javaagent:/apm-agent.jar", "-Delastic.apm.service_name=service-javaapi", "-Delastic.apm.application_packages=org.perficient", "-Delastic.apm.server_urls=http://apm-server:8200", "-jar", "/app/java-api-1.0-SNAPSHOT.jar"]
+    ```
 
 ### Python
 
