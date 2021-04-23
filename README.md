@@ -164,6 +164,53 @@ To configure the APM in a Java application you can adjust it in the following do
 
 ### Python
 
+To configure the APM in a Django (python) project:
+
+1. Install the APM agent for Python as a dependency.
+    ``` bash
+    npm install elastic-apm-node --save
+    ```
+
+2. Configure the agent:
+
+    ```
+    # Add the agent to the installed apps
+    INSTALLED_APPS = (
+      'elasticapm.contrib.django',
+      #...
+    
+    )
+
+
+    ELASTIC_APM = {
+      # Set required service name. 
+      # Allowed characters:
+      # a-z, A-Z, 0-9, -, _, and space
+      'SERVICE_NAME': '',
+
+      # Use if APM Server requires a token
+      'SECRET_TOKEN': '<apm_token>',
+
+      # Set custom APM Server URL (
+      # default: http://localhost:8200)
+      'SERVER_URL': '<apm_server_url>',
+    }
+    # To send performance metrics, add our 
+    # tracing middleware:
+    MIDDLEWARE = (
+      'elasticapm.contrib.django.middleware.TracingMiddleware',
+      #...
+    )
+    ```
+3. If your app is in debug mode (e.g. in Django with settings.DEBUG = True or in Flask with app.debug = True), the agent won’t send any data to the APM Server. You can override it by changing this setting to True. Add the following line in the settings.py file:
+
+    ```
+    ...
+    DEBUG = True
+    ...
+    ```
+
+
 ## Running performance tests
 Download and install latest version of JMeter from https://jmeter.apache.org/download_jmeter.cgi
 
