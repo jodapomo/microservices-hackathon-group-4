@@ -151,7 +151,7 @@ For more configuration options refer to the [documentation](https://www.elastic.
 ### Java
 To configure the APM in a Java application you can adjust it in the following docker file:
 
-    ```docker
+    ```
     FROM openjdk:11
     EXPOSE 8085
     RUN mkdir -p /app/
